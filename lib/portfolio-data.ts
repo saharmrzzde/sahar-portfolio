@@ -9,14 +9,14 @@ export type Localized = Record<Locale, string>
 
 export const profile = {
   // TODO: replace with your name
-  name: "Sara Ahmadi",
-  // Links — replace with your real URLs
-  links: {
-    github: "https://github.com/yourusername",
-    linkedin: "https://linkedin.com/in/yourusername",
-    email: "you@example.com",
-    resume: "/resume.pdf",
-  },
+ name: "Sahar Mirzazadeh",
+
+links: {
+  github: "https://github.com/saharmrzzde",
+  linkedin: "https://www.linkedin.com/in/sahar-mirzazadeh-a6b281326/",
+  email: "saharmirzazadeh2001@gmail.com",
+  resume: "",
+},
   location: {
     en: "Chuncheon, South Korea",
     ko: "대한민국 춘천",
