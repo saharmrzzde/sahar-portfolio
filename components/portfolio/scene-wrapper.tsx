@@ -50,6 +50,22 @@ function SaharSticker() {
   )
 }
 
+function DeskForeground() {
+  return (
+    <div className="pointer-events-none absolute inset-x-[7%] bottom-[3%] z-30 h-[21%] overflow-hidden rounded-t-2xl border-t border-white/10 bg-[linear-gradient(145deg,#302d4b,#22243c)] shadow-[0_-12px_32px_rgba(6,9,22,.35)]" aria-hidden="true">
+      <div className="absolute inset-x-[29%] top-[18%] h-px bg-gradient-to-r from-transparent via-[#a66eb5] to-transparent shadow-[0_0_10px_#a66eb5]" />
+      <div className="absolute inset-y-[28%] left-[31%] w-px bg-white/5" />
+      <div className="absolute inset-y-[28%] right-[31%] w-px bg-white/5" />
+      <div className="absolute top-[25%] left-[7%] grid gap-3">
+        <i className="h-1 w-10 rounded-full bg-[#d8b778]" /><i className="h-1 w-10 rounded-full bg-[#d8b778]" />
+      </div>
+      <div className="absolute top-[25%] right-[7%] grid gap-3">
+        <i className="h-1 w-10 rounded-full bg-[#d8b778]" /><i className="h-1 w-10 rounded-full bg-[#d8b778]" />
+      </div>
+    </div>
+  )
+}
+
 export default function SceneWrapper() {
   const isMobile = useIsMobile()
   const [webgl, setWebgl] = useState(false)
@@ -74,6 +90,7 @@ export default function SceneWrapper() {
     <div className="relative h-full">
       {isMobile || !checked || !webgl ? <RoomFallback /> : <Scene />}
       <SaharSticker />
+      <DeskForeground />
     </div>
   )
 }

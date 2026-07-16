@@ -42,16 +42,24 @@ function Books({ position }: { position: [number, number, number] }) {
 }
 
 function Plant({ position }: { position: [number, number, number] }) {
+  const leaves: Array<{ position: [number, number, number]; rotation: [number, number, number]; scale: [number, number, number]; color: string }> = [
+    { position: [-0.2, 0.18, 0], rotation: [0, 0, 0.72], scale: [0.12, 0.34, 0.08], color: "#65a683" },
+    { position: [0.2, 0.22, 0.02], rotation: [0, 0, -0.72], scale: [0.13, 0.38, 0.08], color: "#78b68d" },
+    { position: [-0.12, 0.45, -0.02], rotation: [0.15, 0, 0.42], scale: [0.12, 0.4, 0.08], color: "#4f916f" },
+    { position: [0.12, 0.5, 0.02], rotation: [-0.15, 0, -0.38], scale: [0.13, 0.42, 0.08], color: "#70ae86" },
+    { position: [0, 0.64, 0], rotation: [0, 0, 0.04], scale: [0.12, 0.42, 0.08], color: "#5ba079" },
+  ]
   return (
     <group position={position}>
       <mesh position={[0, -0.18, 0]}>
-        <cylinderGeometry args={[0.25, 0.19, 0.42, 20]} />
-        <meshStandardMaterial color="#e8b397" roughness={0.75} />
+        <cylinderGeometry args={[0.27, 0.21, 0.42, 24]} />
+        <meshStandardMaterial color="#514367" roughness={0.34} metalness={0.12} />
       </mesh>
-      {[[-0.18, 0.2, 0], [0.18, 0.28, 0.02], [0, 0.42, -0.02], [-0.08, 0.55, 0]].map((leaf, index) => (
-        <mesh key={index} position={leaf as [number, number, number]} rotation={[0, 0, index % 2 ? -0.5 : 0.5]}>
-          <sphereGeometry args={[0.18, 14, 10]} />
-          <meshStandardMaterial color={index % 2 ? "#6f9b7a" : "#85ad8c"} roughness={0.82} />
+      <mesh position={[0, 0.12, 0]}><cylinderGeometry args={[0.025, 0.035, 0.85, 10]} /><meshStandardMaterial color="#52785f" /></mesh>
+      {leaves.map((leaf, index) => (
+        <mesh key={index} position={leaf.position} rotation={leaf.rotation} scale={leaf.scale}>
+          <sphereGeometry args={[1, 18, 12]} />
+          <meshStandardMaterial color={leaf.color} roughness={0.64} />
         </mesh>
       ))}
     </group>
@@ -98,6 +106,12 @@ function Room() {
         <planeGeometry args={[1.86, 1.43]} />
         <meshStandardMaterial color="#293b66" emissive="#4b83d4" emissiveIntensity={0.35} />
       </mesh>
+      {[-2.82, -2.58, -2.31, -2.02, -1.72, -1.48].map((x, index) => (
+        <group key={x} position={[x, 0.78, -1.38]}>
+          <mesh position={[0, (index % 3) * 0.08, 0]}><boxGeometry args={[0.18, 0.34 + (index % 2) * 0.2, 0.025]} /><meshStandardMaterial color="#17233f" /></mesh>
+          <mesh position={[0, 0.04 + (index % 3) * 0.08, 0.025]}><planeGeometry args={[0.035, 0.05]} /><meshBasicMaterial color={index % 2 ? PINK : BLUE} /></mesh>
+        </group>
+      ))}
       <mesh position={[-2.18, 1.25, -1.39]}>
         <boxGeometry args={[0.055, 1.43, 0.035]} />
         <meshStandardMaterial color="#9cadd0" />
@@ -119,6 +133,7 @@ function Room() {
         <boxGeometry args={[3.18, 0.12, 0.48]} />
         <meshStandardMaterial color="#765275" roughness={0.65} />
       </mesh>
+      <mesh position={[1.42, 0.56, -1.31]}><boxGeometry args={[3.05, 0.025, 0.03]} /><meshBasicMaterial color="#b86fa9" /></mesh>
       <Books position={[0.35, 0.98, -1.25]} />
       <Plant position={[2.45, 1.02, -1.25]} />
       <RoundedBox args={[0.62, 0.52, 0.12]} radius={0.08} smoothness={4} position={[1.43, 0.95, -1.28]}>
@@ -130,6 +145,7 @@ function Room() {
       <RoundedBox args={[6.2, 0.26, 2.05]} radius={0.09} smoothness={4} position={[0, -0.54, 0.18]}>
         <meshStandardMaterial color="#43385f" roughness={0.45} metalness={0.12} />
       </RoundedBox>
+      <mesh position={[0, -0.39, 0.2]}><boxGeometry args={[5.75, 0.025, 1.64]} /><meshStandardMaterial color="#74628f" roughness={0.35} metalness={0.25} /></mesh>
       <RoundedBox args={[5.86, 1.16, 0.24]} radius={0.07} smoothness={4} position={[0, -1.12, 0.99]}>
         <meshStandardMaterial color="#292842" roughness={0.58} metalness={0.08} />
       </RoundedBox>
@@ -137,6 +153,9 @@ function Room() {
         <boxGeometry args={[3.75, 0.035, 0.025]} />
         <meshStandardMaterial color="#6f5e91" emissive="#8e63b7" emissiveIntensity={0.15} />
       </mesh>
+      {[-1.65, -1.32, -0.99, -0.66, -0.33, 0, 0.33, 0.66, 0.99, 1.32, 1.65].map((x) => (
+        <mesh key={x} position={[x, -1.23, 1.135]}><boxGeometry args={[0.055, 0.78, 0.028]} /><meshStandardMaterial color="#3c3857" roughness={0.5} /></mesh>
+      ))}
       {[-2.42, 2.42].map((x) => (
         <group key={x} position={[x, -1.05, 1.14]}>
           {[0.23, -0.13, -0.49].map((y) => (
@@ -159,6 +178,17 @@ function Room() {
           <meshStandardMaterial color="#f0b56d" roughness={0.45} />
         </mesh>
         <mesh position={[-0.06, -0.02, 0]}><cylinderGeometry args={[0.25, 0.3, 0.08, 20]} /><meshStandardMaterial color="#40506b" /></mesh>
+      </group>
+      <group position={[0.2, -0.02, -0.48]}>
+        <RoundedBox args={[1.66, 0.94, 0.12]} radius={0.08} smoothness={4} position={[0, 0.26, 0]}>
+          <meshStandardMaterial color="#1c263d" roughness={0.3} metalness={0.25} />
+        </RoundedBox>
+        <mesh position={[0, 0.26, 0.07]}><planeGeometry args={[1.44, 0.72]} /><meshStandardMaterial color="#182746" emissive="#326eae" emissiveIntensity={0.22} /></mesh>
+        {[[-0.48, 0.42, 0.08, PINK], [-0.3, 0.24, 0.56, BLUE], [-0.18, 0.06, 0.92, "#a995dd"]].map(([x, y, width, color], index) => (
+          <mesh key={index} position={[x as number, y as number, 0.085]}><planeGeometry args={[width as number, 0.045]} /><meshBasicMaterial color={color as string} /></mesh>
+        ))}
+        <mesh position={[0, -0.36, 0]}><cylinderGeometry args={[0.055, 0.075, 0.42, 16]} /><meshStandardMaterial color="#45516e" metalness={0.4} /></mesh>
+        <mesh position={[0, -0.57, 0]}><boxGeometry args={[0.58, 0.06, 0.34]} /><meshStandardMaterial color="#45516e" metalness={0.35} /></mesh>
       </group>
       <Plant position={[2.42, 0.08, 0.12]} />
       <Float speed={1.2} rotationIntensity={0.1} floatIntensity={0.22}>
