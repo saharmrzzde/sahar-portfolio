@@ -168,16 +168,30 @@ function Room() {
       ))}
 
       {/* Desk accessories */}
-      <group position={[-2.18, -0.18, 0.05]}>
-        <mesh position={[0, 0.23, 0]} rotation={[0, 0, -0.18]}>
-          <cylinderGeometry args={[0.045, 0.045, 0.55, 12]} />
-          <meshStandardMaterial color="#40506b" metalness={0.35} />
+      <group position={[-2.18, -0.17, 0.05]}>
+        <mesh position={[-0.08, -0.01, 0]} scale={[1.2, 1, 0.72]}>
+          <cylinderGeometry args={[0.25, 0.3, 0.08, 24]} />
+          <meshStandardMaterial color="#303b59" roughness={0.28} metalness={0.48} />
         </mesh>
-        <mesh position={[0.14, 0.52, 0]} rotation={[0, 0, -0.55]}>
-          <coneGeometry args={[0.23, 0.3, 20]} />
-          <meshStandardMaterial color="#f0b56d" roughness={0.45} />
+        <mesh position={[-0.08, 0.24, 0]} rotation={[0, 0, -0.22]}>
+          <cylinderGeometry args={[0.035, 0.045, 0.52, 16]} />
+          <meshStandardMaterial color="#53617f" roughness={0.24} metalness={0.62} />
         </mesh>
-        <mesh position={[-0.06, -0.02, 0]}><cylinderGeometry args={[0.25, 0.3, 0.08, 20]} /><meshStandardMaterial color="#40506b" /></mesh>
+        <mesh position={[0.08, 0.53, 0]} rotation={[0, 0, -0.82]}>
+          <cylinderGeometry args={[0.032, 0.04, 0.44, 16]} />
+          <meshStandardMaterial color="#53617f" roughness={0.24} metalness={0.62} />
+        </mesh>
+        <mesh position={[-0.02, 0.48, 0]}><sphereGeometry args={[0.075, 18, 12]} /><meshStandardMaterial color="#9c7bb0" roughness={0.26} metalness={0.4} /></mesh>
+        <group position={[0.29, 0.68, 0]} rotation={[0, 0, -0.12]}>
+          <RoundedBox args={[0.52, 0.16, 0.28]} radius={0.07} smoothness={5}>
+            <meshStandardMaterial color="#4a3d68" roughness={0.26} metalness={0.32} />
+          </RoundedBox>
+          <mesh position={[0, -0.09, 0]}>
+            <boxGeometry args={[0.38, 0.025, 0.18]} />
+            <meshStandardMaterial color="#ffd99a" emissive="#ffc56f" emissiveIntensity={2.2} toneMapped={false} />
+          </mesh>
+          <pointLight position={[0, -0.14, 0.08]} intensity={3.5} color="#ffc477" distance={2.1} decay={2} />
+        </group>
       </group>
       <group position={[0.2, -0.02, -0.48]}>
         <RoundedBox args={[1.66, 0.94, 0.12]} radius={0.08} smoothness={4} position={[0, 0.26, 0]}>
