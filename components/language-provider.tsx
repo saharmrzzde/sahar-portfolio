@@ -20,7 +20,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY) as Locale | null
-    if (stored === "en" || stored === "ko") setLocaleState(stored)
+    if (stored === "en" || stored === "ko") {
+      document.documentElement.lang = stored
+      const id = requestAnimationFrame(() => setLocaleState(stored))
+      return () => cancelAnimationFrame(id)
+    }
   }, [])
 
   const setLocale = useCallback((l: Locale) => {

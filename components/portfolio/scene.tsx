@@ -1,201 +1,117 @@
 "use client"
 
-import { useMemo, useRef } from "react"
-import { Canvas, useFrame, type ThreeElements } from "@react-three/fiber"
-import { Environment, Float, RoundedBox, Text } from "@react-three/drei"
+import { useRef } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
+import { Float, RoundedBox, Text } from "@react-three/drei"
 import * as THREE from "three"
 import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion"
 
-const BLUE = "#6aa8ff"
-const PINK = "#ff8fc7"
-const LAVENDER = "#b9a7ff"
+const BLUE = "#74a8f5"
+const PINK = "#f3a5c5"
+const LAVENDER = "#b8a8ea"
+const CREAM = "#fff8ee"
 
-function CodeLine({
-  y,
-  width,
-  color,
-}: {
-  y: number
-  width: number
-  color: string
-}) {
+function Frame({ position, label, color }: { position: [number, number, number]; label: string; color: string }) {
   return (
-    <mesh position={[-1.1 + width / 2, y, 0.06]}>
-      <boxGeometry args={[width, 0.08, 0.02]} />
-      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.6} toneMapped={false} />
-    </mesh>
+    <group position={position}>
+      <RoundedBox args={[1.4, 0.95, 0.1]} radius={0.06} smoothness={4}>
+        <meshStandardMaterial color="#ffffff" roughness={0.38} />
+      </RoundedBox>
+      <mesh position={[0, 0, 0.065]}>
+        <planeGeometry args={[1.12, 0.68]} />
+        <meshStandardMaterial color={color} roughness={0.7} />
+      </mesh>
+      <Text position={[0, 0, 0.08]} fontSize={0.16} color="#40506b" anchorX="center" anchorY="middle" maxWidth={0.95} textAlign="center">
+        {label}
+      </Text>
+    </group>
   )
 }
 
-function Laptop(props: ThreeElements["group"]) {
-  const codeLines = useMemo(
-    () => [
-      { width: 1.1, color: LAVENDER },
-      { width: 1.7, color: BLUE },
-      { width: 0.8, color: PINK },
-      { width: 1.9, color: "#8b93b5" },
-      { width: 1.3, color: BLUE },
-      { width: 0.6, color: PINK },
-    ],
-    [],
-  )
-
+function Laptop() {
   return (
-    <group {...props}>
-      {/* Base / keyboard */}
-      <RoundedBox args={[3.2, 0.16, 2.1]} radius={0.06} smoothness={4} position={[0, -0.05, 0.55]}>
-        <meshStandardMaterial color="#2a3358" metalness={0.6} roughness={0.35} />
+    <group position={[-0.25, -0.1, 0.35]}>
+      <RoundedBox args={[2.2, 0.12, 1.35]} radius={0.05} smoothness={4}>
+        <meshStandardMaterial color="#d4dced" metalness={0.35} roughness={0.35} />
       </RoundedBox>
-      {/* trackpad */}
-      <mesh position={[0, 0.04, 1.1]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[0.9, 0.6]} />
-        <meshStandardMaterial color="#3a4470" metalness={0.4} roughness={0.5} />
-      </mesh>
-
-      {/* Screen assembly, hinged at the back */}
-      <group position={[0, 0, -0.45]} rotation={[-0.32, 0, 0]}>
-        {/* screen shell */}
-        <RoundedBox args={[3.2, 2.1, 0.12]} radius={0.06} smoothness={4} position={[0, 1, 0]}>
-          <meshStandardMaterial color="#232b4d" metalness={0.6} roughness={0.35} />
+      <group position={[0, 0.55, -0.55]} rotation={[-0.12, 0, 0]}>
+        <RoundedBox args={[2.2, 1.35, 0.1]} radius={0.05} smoothness={4}>
+          <meshStandardMaterial color="#536582" metalness={0.2} roughness={0.4} />
         </RoundedBox>
-        {/* glowing display */}
-        <mesh position={[0, 1, 0.07]}>
-          <planeGeometry args={[2.8, 1.7]} />
-          <meshStandardMaterial color="#141a35" emissive={BLUE} emissiveIntensity={0.15} toneMapped={false} />
+        <mesh position={[0, 0, 0.06]}>
+          <planeGeometry args={[1.94, 1.08]} />
+          <meshStandardMaterial color="#eef6ff" emissive={BLUE} emissiveIntensity={0.08} />
         </mesh>
-        {/* code lines */}
-        <group position={[0, 1.55, 0.02]}>
-          {codeLines.map((line, i) => (
-            <CodeLine key={i} y={-i * 0.24} width={line.width} color={line.color} />
-          ))}
-        </group>
+        {[0.28, 0, -0.28].map((y, i) => (
+          <mesh key={y} position={[-0.35 + i * 0.12, y, 0.07]}>
+            <boxGeometry args={[0.92 + i * 0.18, 0.08, 0.02]} />
+            <meshStandardMaterial color={[LAVENDER, BLUE, PINK][i]} />
+          </mesh>
+        ))}
       </group>
     </group>
   )
 }
 
-function TechCard({
-  label,
-  color,
-  position,
-  floatSpeed,
-}: {
-  label: string
-  color: string
-  position: [number, number, number]
-  floatSpeed: number
-}) {
+function PixelSahar() {
   return (
-    <Float speed={floatSpeed} rotationIntensity={0.6} floatIntensity={1.2}>
-      <group position={position}>
-        <RoundedBox args={[0.9, 0.9, 0.12]} radius={0.14} smoothness={4}>
-          <meshStandardMaterial
-            color="#1c2444"
-            emissive={color}
-            emissiveIntensity={0.25}
-            metalness={0.3}
-            roughness={0.4}
-          />
+    <group position={[1.48, -0.15, 0.58]} rotation={[0, -0.16, 0]}>
+      <mesh position={[0, 1.42, 0]}><boxGeometry args={[0.64, 0.64, 0.56]} /><meshStandardMaterial color="#efc3af" /></mesh>
+      <mesh position={[0, 1.67, -0.08]}><boxGeometry args={[0.74, 0.28, 0.62]} /><meshStandardMaterial color="#3b2e4a" /></mesh>
+      <mesh position={[0, 0.75, 0]}><boxGeometry args={[0.82, 0.86, 0.55]} /><meshStandardMaterial color="#8e82c9" /></mesh>
+      <mesh position={[-0.58, 0.78, -0.12]} rotation={[0, 0, -0.55]}><boxGeometry args={[0.22, 0.88, 0.22]} /><meshStandardMaterial color="#efc3af" /></mesh>
+      <mesh position={[0.58, 0.78, -0.12]} rotation={[0, 0, 0.55]}><boxGeometry args={[0.22, 0.88, 0.22]} /><meshStandardMaterial color="#efc3af" /></mesh>
+      <mesh position={[-0.24, 0.05, 0]}><boxGeometry args={[0.28, 0.72, 0.3]} /><meshStandardMaterial color="#55627b" /></mesh>
+      <mesh position={[0.24, 0.05, 0]}><boxGeometry args={[0.28, 0.72, 0.3]} /><meshStandardMaterial color="#55627b" /></mesh>
+    </group>
+  )
+}
+
+function Room() {
+  const room = useRef<THREE.Group>(null)
+  const reduced = usePrefersReducedMotion()
+
+  useFrame((state) => {
+    if (!room.current || reduced) return
+    const targetY = state.pointer.x * 0.08 - 0.1
+    const targetX = -state.pointer.y * 0.04 + 0.04
+    room.current.rotation.y += (targetY - room.current.rotation.y) * 0.035
+    room.current.rotation.x += (targetX - room.current.rotation.x) * 0.035
+  })
+
+  return (
+    <group ref={room} position={[0, -0.35, 0]}>
+      <mesh position={[0, 0.8, -1.7]}><boxGeometry args={[7, 4.8, 0.15]} /><meshStandardMaterial color={CREAM} roughness={0.9} /></mesh>
+      <mesh position={[0, -1.28, 0]}><boxGeometry args={[7, 0.14, 4.8]} /><meshStandardMaterial color="#ead9c8" roughness={0.95} /></mesh>
+      <Frame position={[-2.05, 1.5, -1.58]} label="TOPIK 5" color="#dcecff" />
+      <Frame position={[0, 1.65, -1.58]} label="Samsung Dream Scholar" color="#ffe1ec" />
+      <Frame position={[2.05, 1.5, -1.58]} label="ICDL · 2019" color="#eee7ff" />
+      <mesh position={[0, -0.45, 0]}><boxGeometry args={[4.9, 0.18, 1.85]} /><meshStandardMaterial color="#bd9071" roughness={0.75} /></mesh>
+      <mesh position={[-2, -0.95, 0]}><boxGeometry args={[0.16, 1.05, 0.16]} /><meshStandardMaterial color="#9e745c" /></mesh>
+      <mesh position={[2, -0.95, 0]}><boxGeometry args={[0.16, 1.05, 0.16]} /><meshStandardMaterial color="#9e745c" /></mesh>
+      <Laptop />
+      <PixelSahar />
+      <Float speed={1.3} rotationIntensity={0.15} floatIntensity={0.35}>
+        <RoundedBox args={[0.8, 0.8, 0.12]} radius={0.16} smoothness={4} position={[-2.45, 0.25, -0.1]}>
+          <meshStandardMaterial color="#ffffff" emissive={BLUE} emissiveIntensity={0.08} />
         </RoundedBox>
-        <Text
-          position={[0, 0, 0.08]}
-          fontSize={0.32}
-          color={color}
-          anchorX="center"
-          anchorY="middle"
-        >
-          {label}
-        </Text>
-      </group>
-    </Float>
-  )
-}
-
-function Particles({ count = 140 }: { count?: number }) {
-  const ref = useRef<THREE.Points>(null)
-  const reduced = usePrefersReducedMotion()
-
-  const { positions, colors } = useMemo(() => {
-    const positions = new Float32Array(count * 3)
-    const colors = new Float32Array(count * 3)
-    const palette = [new THREE.Color(BLUE), new THREE.Color(PINK), new THREE.Color(LAVENDER)]
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 16
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10 - 2
-      const c = palette[i % palette.length]
-      colors[i * 3] = c.r
-      colors[i * 3 + 1] = c.g
-      colors[i * 3 + 2] = c.b
-    }
-    return { positions, colors }
-  }, [count])
-
-  useFrame((state) => {
-    if (!ref.current || reduced) return
-    ref.current.rotation.y = state.clock.elapsedTime * 0.03
-  })
-
-  return (
-    <points ref={ref}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.08}
-        vertexColors
-        transparent
-        opacity={0.8}
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-        sizeAttenuation
-      />
-    </points>
-  )
-}
-
-function Rig() {
-  const group = useRef<THREE.Group>(null)
-  const reduced = usePrefersReducedMotion()
-
-  useFrame((state) => {
-    if (!group.current) return
-    const t = state.clock.elapsedTime
-    const targetY = reduced ? -0.3 : state.pointer.x * 0.35 - 0.3
-    const targetX = reduced ? 0.1 : -state.pointer.y * 0.2 + 0.1
-    group.current.rotation.y += (targetY - group.current.rotation.y) * 0.05
-    group.current.rotation.x += (targetX - group.current.rotation.x) * 0.05
-    if (!reduced) group.current.position.y = Math.sin(t * 0.8) * 0.12
-  })
-
-  return (
-    <group ref={group}>
-      <Float speed={1.4} rotationIntensity={0.2} floatIntensity={0.6}>
-        <Laptop position={[0, 0, 0]} />
+        <Text position={[-2.45, 0.25, -0.02]} fontSize={0.22} color={BLUE} anchorX="center" anchorY="middle">{"</>"}</Text>
       </Float>
-      <TechCard label="TS" color={BLUE} position={[-3, 1.4, 1]} floatSpeed={1.6} />
-      <TechCard label="{ }" color={PINK} position={[3, 1.7, 0.5]} floatSpeed={1.2} />
-      <TechCard label="</>" color={LAVENDER} position={[3.2, -1.1, 1.2]} floatSpeed={1.9} />
-      <TechCard label="React" color={BLUE} position={[-3.3, -1, 0.8]} floatSpeed={1.3} />
     </group>
   )
 }
 
 export default function Scene() {
   return (
-    <Canvas
-      camera={{ position: [0, 0.5, 8], fov: 42 }}
-      dpr={[1, 1.8]}
-      gl={{ antialias: true, alpha: true }}
-    >
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 6, 5]} intensity={1.1} />
-      <pointLight position={[-6, -2, 4]} intensity={40} color={PINK} distance={20} />
-      <pointLight position={[6, 3, 2]} intensity={40} color={BLUE} distance={20} />
-      <Rig />
-      <Particles />
-      <Environment preset="night" />
-    </Canvas>
+    <div className="glass h-full overflow-hidden rounded-[2.5rem]">
+      <Canvas camera={{ position: [0, 0.65, 8.2], fov: 42 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
+        <color attach="background" args={["#fffaf3"]} />
+        <ambientLight intensity={1.5} />
+        <directionalLight position={[4, 6, 5]} intensity={2.2} color="#fff7ec" />
+        <pointLight position={[-4, 2, 4]} intensity={18} color={PINK} distance={12} />
+        <pointLight position={[4, 2, 4]} intensity={16} color={BLUE} distance={12} />
+        <Room />
+      </Canvas>
+    </div>
   )
 }

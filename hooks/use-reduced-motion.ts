@@ -1,33 +1,24 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useSyncExternalStore } from "react"
 
-/** Returns true when the user prefers reduced motion. SSR-safe. */
-export function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false)
+const getServerSnapshot = () => false
 
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
-    setReduced(mq.matches)
-    const onChange = () => setReduced(mq.matches)
-    mq.addEventListener("change", onChange)
-    return () => mq.removeEventListener("change", onChange)
-  }, [])
+function useMediaQuery(query: string) {
+  const subscribe = useCallback((onStoreChange: () => void) => {
+    const media = window.matchMedia(query)
+    media.addEventListener("change", onStoreChange)
+    return () => media.removeEventListener("change", onStoreChange)
+  }, [query])
 
-  return reduced
+  const getSnapshot = useCallback(() => window.matchMedia(query).matches, [query])
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
 
-/** Returns true on small screens (used to swap in a lightweight 3D fallback). */
+export function usePrefersReducedMotion() {
+  return useMediaQuery("(prefers-reduced-motion: reduce)")
+}
+
 export function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`)
-    setIsMobile(mq.matches)
-    const onChange = () => setIsMobile(mq.matches)
-    mq.addEventListener("change", onChange)
-    return () => mq.removeEventListener("change", onChange)
-  }, [breakpoint])
-
-  return isMobile
+  return useMediaQuery(`(max-width: ${breakpoint - 1}px)`)
 }
