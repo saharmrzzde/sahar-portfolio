@@ -4,7 +4,6 @@ import dynamic from "next/dynamic"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { Code2, Sparkles } from "lucide-react"
-import { useIsMobile } from "@/hooks/use-reduced-motion"
 
 const Scene = dynamic(() => import("@/components/portfolio/scene"), { ssr: false })
 
@@ -51,7 +50,6 @@ function SaharSticker() {
 }
 
 export default function SceneWrapper() {
-  const isMobile = useIsMobile()
   const [webgl, setWebgl] = useState(false)
   const [checked, setChecked] = useState(false)
 
@@ -72,7 +70,7 @@ export default function SceneWrapper() {
 
   return (
     <div className="relative h-full">
-      {isMobile || !checked || !webgl ? <RoomFallback /> : <Scene />}
+      {!checked || !webgl ? <RoomFallback /> : <Scene />}
       <SaharSticker />
     </div>
   )

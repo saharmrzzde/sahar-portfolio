@@ -1,14 +1,20 @@
 "use client"
 
 import { useRef } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Float, RoundedBox, Text } from "@react-three/drei"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import { Float, PerspectiveCamera, RoundedBox, Text } from "@react-three/drei"
 import * as THREE from "three"
 import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion"
 
 const BLUE = "#74a8f5"
 const PINK = "#f3a5c5"
 const CREAM = "#18243d"
+
+function ResponsiveCamera() {
+  const { size } = useThree()
+  const mobile = size.width < 520
+  return <PerspectiveCamera makeDefault position={[0, mobile ? 0.34 : 0.42, mobile ? 9.25 : 7.65]} fov={40} />
+}
 
 function Frame({ position, label, color }: { position: [number, number, number]; label: string; color: string }) {
   return (
@@ -218,13 +224,14 @@ function Room() {
 export default function Scene() {
   return (
     <div className="glass h-full overflow-hidden rounded-[2.5rem]">
-      <Canvas camera={{ position: [0, 0.42, 7.65], fov: 40 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }} shadows>
+      <Canvas camera={{ position: [0, 0.42, 7.65], fov: 40 }} dpr={[1, 1.35]} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} shadows>
         <color attach="background" args={["#111a2d"]} />
         <ambientLight intensity={1.25} />
         <directionalLight position={[4, 6, 5]} intensity={2.1} color="#dce8ff" castShadow />
         <pointLight position={[-3, 2.2, 3]} intensity={15} color={PINK} distance={11} />
         <pointLight position={[3.5, 2, 4]} intensity={17} color={BLUE} distance={12} />
         <pointLight position={[-2.1, 0.55, 1]} intensity={7} color="#ffd79d" distance={5} />
+        <ResponsiveCamera />
         <Room />
       </Canvas>
     </div>
