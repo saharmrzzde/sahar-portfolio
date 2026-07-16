@@ -24,7 +24,7 @@ export function HeroSection() {
 
       <div className="relative mx-auto grid min-h-[calc(100vh-11rem)] max-w-6xl items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
         <div className={cn("z-10 transition-all duration-700 motion-reduce:transition-none", mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0")}>
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/65 px-3 py-1.5 text-sm text-muted-foreground shadow-sm backdrop-blur">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-muted-foreground shadow-sm backdrop-blur">
             <MapPin className="size-3.5 text-primary" aria-hidden="true" />
             {t(profile.location)}
           </span>
@@ -41,7 +41,7 @@ export function HeroSection() {
             <a href="#projects" className="inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground glow-blue transition-transform hover:-translate-y-0.5">
               {t(hero.ctaProjects)} <ArrowRight className="size-4" aria-hidden="true" />
             </a>
-            <a href="#contact" className="rounded-2xl border border-white/90 bg-white/60 px-5 py-3 text-sm font-semibold shadow-sm backdrop-blur transition-colors hover:bg-white">{t(hero.ctaContact)}</a>
+            <a href="#contact" className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold shadow-sm backdrop-blur transition-colors hover:bg-white/10">{t(hero.ctaContact)}</a>
             <div className="flex items-center gap-1">
               <IconLink href={profile.links.github} label="GitHub"><GithubIcon className="size-5" /></IconLink>
               <IconLink href={profile.links.linkedin} label="LinkedIn"><LinkedinIcon className="size-5" /></IconLink>
@@ -65,7 +65,7 @@ export function HeroSection() {
 
 function IconLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="grid size-11 place-items-center rounded-2xl border border-white/90 bg-white/60 text-muted-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white hover:text-foreground">
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="grid size-11 place-items-center rounded-2xl border border-white/15 bg-white/5 text-muted-foreground shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:bg-white/10 hover:text-foreground">
       {children}
     </a>
   )

@@ -30,12 +30,12 @@ export function ContactSection() {
               <p className="mt-5 max-w-2xl leading-relaxed text-muted-foreground">{t(contact.subtitle)}</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href={`mailto:${profile.links.email}`} className="inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground glow-blue transition-transform hover:-translate-y-0.5"><Mail className="size-4" />{t(contact.email)}</a>
-                <button type="button" onClick={copyEmail} className="inline-flex items-center gap-2 rounded-2xl border border-white/90 bg-white/65 px-5 py-3 text-sm font-semibold shadow-sm transition-colors hover:bg-white" aria-live="polite">
+                <button type="button" onClick={copyEmail} className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold shadow-sm transition-colors hover:bg-white/10" aria-live="polite">
                   {copied ? <Check className="size-4 text-primary" /> : <Copy className="size-4" />}{copied ? t(contact.copied) : t(contact.copy)}
                 </button>
               </div>
             </div>
-            <div className="rounded-3xl border border-white/90 bg-white/55 p-5 backdrop-blur">
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5 backdrop-blur">
               <div className="flex items-start gap-3"><span className="grid size-10 place-items-center rounded-xl bg-secondary text-primary"><MapPin className="size-4" /></span><div><p className="text-xs text-muted-foreground">{t({ en: "Based in", ko: "현재 위치" })}</p><p className="mt-0.5 text-sm font-semibold">{t(profile.location)}</p></div></div>
               <div className="mt-5 flex gap-2">
                 <Social href={profile.links.github} label="GitHub"><GithubIcon className="size-5" /></Social>
@@ -50,5 +50,5 @@ export function ContactSection() {
 }
 
 function Social({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
-  return <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="grid size-11 place-items-center rounded-2xl border border-white/90 bg-white/70 text-muted-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:text-foreground">{children}</a>
+  return <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="grid size-11 place-items-center rounded-2xl border border-white/15 bg-white/5 text-muted-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-white/10 hover:text-foreground">{children}</a>
 }

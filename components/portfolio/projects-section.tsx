@@ -39,12 +39,12 @@ export function ProjectsSection() {
                 <div className="p-6 sm:p-7">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-display text-xl font-bold sm:text-2xl">{t(project.title)}</h3>
-                    <span className="rounded-full bg-white/80 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">0{index + 1}</span>
+                    <span className="rounded-full bg-white/10 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">0{index + 1}</span>
                   </div>
                   <p className="mt-3 leading-relaxed text-muted-foreground">{t(project.description)}</p>
                   <p className="mt-3 border-l-2 border-primary/40 pl-3 text-sm font-medium text-foreground/75">{t(project.outcome)}</p>
                   <ul className="mt-5 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => <li key={tag} className="rounded-full border border-white/90 bg-white/60 px-3 py-1.5 font-mono text-[11px] text-muted-foreground">{tag}</li>)}
+                    {project.tags.map((tag) => <li key={tag} className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 font-mono text-[11px] text-muted-foreground">{tag}</li>)}
                   </ul>
                   <div className="mt-6 flex flex-wrap items-center gap-3 text-sm font-semibold">
                     {project.demo && <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-primary hover:underline">{t({ en: "Live project", ko: "라이브 프로젝트" })}<ArrowUpRight className="size-4" /></a>}

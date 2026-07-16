@@ -31,7 +31,7 @@ export function SkillsSection() {
                   <p className="mt-5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{t(group.note)}</p>
                   <h3 className="mt-1 font-display text-xl font-bold">{t(group.title)}</h3>
                   <ul className="mt-5 flex flex-wrap gap-2">
-                    {group.items.map((item) => <li key={item} className="rounded-full border border-white/90 bg-white/60 px-3 py-1.5 text-xs font-medium text-muted-foreground">{item}</li>)}
+                    {group.items.map((item) => <li key={item} className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-muted-foreground">{item}</li>)}
                   </ul>
                 </article>
               </Reveal>
@@ -47,7 +47,7 @@ export function SkillsSection() {
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t({ en: "Communication across six languages and cultures.", ko: "여섯 언어와 문화권을 잇는 소통 역량입니다." })}</p>
             </div>
             <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {languages.map((language) => <li key={language.name.en} className="rounded-2xl border border-white/90 bg-white/60 px-4 py-3"><span className="block text-sm font-semibold">{t(language.name)}</span><span className="mt-0.5 block text-xs text-muted-foreground">{t(language.level)}</span></li>)}
+              {languages.map((language) => <li key={language.name.en} className="rounded-2xl border border-white/15 bg-white/5 px-4 py-3"><span className="block text-sm font-semibold">{t(language.name)}</span><span className="mt-0.5 block text-xs text-muted-foreground">{t(language.level)}</span></li>)}
             </ul>
           </div>
         </Reveal>

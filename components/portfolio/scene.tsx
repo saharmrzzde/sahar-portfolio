@@ -8,13 +8,13 @@ import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion"
 
 const BLUE = "#74a8f5"
 const PINK = "#f3a5c5"
-const CREAM = "#fff8ee"
+const CREAM = "#18243d"
 
 function Frame({ position, label, color }: { position: [number, number, number]; label: string; color: string }) {
   return (
     <group position={position}>
       <RoundedBox args={[1.2, 0.76, 0.1]} radius={0.05} smoothness={4}>
-        <meshStandardMaterial color="#fffdf9" roughness={0.35} />
+        <meshStandardMaterial color="#33405f" roughness={0.35} metalness={0.1} />
       </RoundedBox>
       <mesh position={[0, 0, 0.065]}>
         <planeGeometry args={[0.98, 0.55]} />
@@ -79,36 +79,36 @@ function Room() {
       </mesh>
       <mesh position={[-3.62, 0.15, 0]}>
         <boxGeometry args={[0.16, 5.8, 3.55]} />
-        <meshStandardMaterial color="#f4e8dc" roughness={0.9} />
+        <meshStandardMaterial color="#202b48" roughness={0.9} />
       </mesh>
       <mesh position={[0, -1.6, 0]}>
         <boxGeometry args={[7.5, 0.16, 5.2]} />
-        <meshStandardMaterial color="#dfc6b1" roughness={0.92} />
+        <meshStandardMaterial color="#171d33" roughness={0.92} />
       </mesh>
       <mesh position={[0, -1.48, -1.58]}>
         <boxGeometry args={[7.3, 0.12, 0.16]} />
-        <meshStandardMaterial color="#d2ae93" roughness={0.7} />
+        <meshStandardMaterial color="#35405f" roughness={0.7} />
       </mesh>
 
       {/* Window and warm city view */}
       <RoundedBox args={[2.15, 1.72, 0.12]} radius={0.06} smoothness={4} position={[-2.18, 1.25, -1.57]}>
-        <meshStandardMaterial color="#fffdfa" roughness={0.28} />
+        <meshStandardMaterial color="#8795bd" roughness={0.28} metalness={0.2} />
       </RoundedBox>
       <mesh position={[-2.18, 1.25, -1.49]}>
         <planeGeometry args={[1.86, 1.43]} />
-        <meshStandardMaterial color="#b8daf3" emissive="#9bc9ee" emissiveIntensity={0.22} />
+        <meshStandardMaterial color="#293b66" emissive="#4b83d4" emissiveIntensity={0.35} />
       </mesh>
       <mesh position={[-2.18, 1.25, -1.39]}>
         <boxGeometry args={[0.055, 1.43, 0.035]} />
-        <meshStandardMaterial color="#fffdf9" />
+        <meshStandardMaterial color="#9cadd0" />
       </mesh>
       <mesh position={[-2.18, 1.25, -1.38]}>
         <boxGeometry args={[1.86, 0.055, 0.035]} />
-        <meshStandardMaterial color="#fffdf9" />
+        <meshStandardMaterial color="#9cadd0" />
       </mesh>
       <mesh position={[-2.18, 0.53, -1.35]}>
         <boxGeometry args={[2.18, 0.1, 0.3]} />
-        <meshStandardMaterial color="#f7efe6" roughness={0.5} />
+        <meshStandardMaterial color="#4a5878" roughness={0.5} />
       </mesh>
 
       {/* Achievements and shelf */}
@@ -117,7 +117,7 @@ function Room() {
       <Frame position={[2.76, 1.73, -1.58]} label="ICDL · 2019" color="#eee7ff" />
       <mesh position={[1.42, 0.62, -1.35]}>
         <boxGeometry args={[3.18, 0.12, 0.48]} />
-        <meshStandardMaterial color="#ad8067" roughness={0.65} />
+        <meshStandardMaterial color="#765275" roughness={0.65} />
       </mesh>
       <Books position={[0.35, 0.98, -1.25]} />
       <Plant position={[2.45, 1.02, -1.25]} />
@@ -128,20 +128,20 @@ function Room() {
 
       {/* Large executive desk: the solid front hides the character's lower body */}
       <RoundedBox args={[6.2, 0.26, 2.05]} radius={0.09} smoothness={4} position={[0, -0.54, 0.18]}>
-        <meshStandardMaterial color="#b77f5f" roughness={0.58} />
+        <meshStandardMaterial color="#43385f" roughness={0.45} metalness={0.12} />
       </RoundedBox>
       <RoundedBox args={[5.86, 1.16, 0.24]} radius={0.07} smoothness={4} position={[0, -1.12, 0.99]}>
-        <meshStandardMaterial color="#9f6d54" roughness={0.68} />
+        <meshStandardMaterial color="#292842" roughness={0.58} metalness={0.08} />
       </RoundedBox>
       <mesh position={[0, -0.96, 1.13]}>
         <boxGeometry args={[3.75, 0.035, 0.025]} />
-        <meshStandardMaterial color="#c99675" />
+        <meshStandardMaterial color="#6f5e91" emissive="#8e63b7" emissiveIntensity={0.15} />
       </mesh>
       {[-2.42, 2.42].map((x) => (
         <group key={x} position={[x, -1.05, 1.14]}>
           {[0.23, -0.13, -0.49].map((y) => (
             <group key={y} position={[0, y, 0]}>
-              <mesh><boxGeometry args={[0.72, 0.25, 0.05]} /><meshStandardMaterial color="#aa765a" roughness={0.62} /></mesh>
+              <mesh><boxGeometry args={[0.72, 0.25, 0.05]} /><meshStandardMaterial color="#34324f" roughness={0.62} /></mesh>
               <mesh position={[0, 0, 0.04]}><boxGeometry args={[0.18, 0.025, 0.025]} /><meshStandardMaterial color="#e4bb84" metalness={0.55} roughness={0.25} /></mesh>
             </group>
           ))}
@@ -175,9 +175,9 @@ export default function Scene() {
   return (
     <div className="glass h-full overflow-hidden rounded-[2.5rem]">
       <Canvas camera={{ position: [0, 0.42, 7.65], fov: 40 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }} shadows>
-        <color attach="background" args={["#fffaf3"]} />
+        <color attach="background" args={["#111a2d"]} />
         <ambientLight intensity={1.25} />
-        <directionalLight position={[4, 6, 5]} intensity={2.4} color="#fff7ec" castShadow />
+        <directionalLight position={[4, 6, 5]} intensity={2.1} color="#dce8ff" castShadow />
         <pointLight position={[-3, 2.2, 3]} intensity={15} color={PINK} distance={11} />
         <pointLight position={[3.5, 2, 4]} intensity={17} color={BLUE} distance={12} />
         <pointLight position={[-2.1, 0.55, 1]} intensity={7} color="#ffd79d" distance={5} />
