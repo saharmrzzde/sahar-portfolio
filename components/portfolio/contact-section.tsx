@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, Mail, Send } from "lucide-react"
+import { Check, Copy, Mail, MapPin } from "lucide-react"
 import { GithubIcon, LinkedinIcon } from "@/components/portfolio/brand-icons"
 import { Reveal } from "@/components/portfolio/reveal"
 import { useLanguage } from "@/components/language-provider"
@@ -9,139 +9,46 @@ import { contact, profile } from "@/lib/portfolio-data"
 
 export function ContactSection() {
   const { t } = useLanguage()
-  const [sent, setSent] = useState(false)
+  const [copied, setCopied] = useState(false)
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    // Demo only: wire this up to an email service or server action.
-    setSent(true)
-    e.currentTarget.reset()
-    window.setTimeout(() => setSent(false), 4000)
+  async function copyEmail() {
+    await navigator.clipboard.writeText(profile.links.email)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 2200)
   }
 
   return (
     <section id="contact" className="relative scroll-mt-24 px-6 py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="glass overflow-hidden rounded-3xl">
-          <div className="grid gap-10 p-8 sm:p-12 lg:grid-cols-2">
-            <Reveal>
-              <div>
-                <p className="font-mono text-sm text-primary">@</p>
-                <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-                  {t(contact.title as never)}
-                </h2>
-                <p className="mt-4 max-w-md leading-relaxed text-muted-foreground">
-                  {t(contact.subtitle as never)}
-                </p>
-
-                <div className="mt-8 flex flex-col gap-3">
-                  <a
-                    href={`mailto:${profile.links.email}`}
-                    className="inline-flex items-center gap-3 text-foreground transition-colors hover:text-primary"
-                  >
-                    <span className="grid size-10 place-items-center rounded-xl border border-border bg-card/40">
-                      <Mail className="size-4" />
-                    </span>
-                    {profile.links.email}
-                  </a>
-                  <div className="mt-2 flex gap-2">
-                    <SocialButton href={profile.links.github} label="GitHub">
-                      <GithubIcon className="size-5" />
-                    </SocialButton>
-                    <SocialButton href={profile.links.linkedin} label="LinkedIn">
-                      <LinkedinIcon className="size-5" />
-                    </SocialButton>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <Field label={t(contact.form.name as never)} htmlFor="name">
-                  <input
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 outline-none transition-colors focus:border-primary"
-                  />
-                </Field>
-                <Field label={t(contact.form.email as never)} htmlFor="email">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 outline-none transition-colors focus:border-primary"
-                  />
-                </Field>
-                <Field label={t(contact.form.message as never)} htmlFor="message">
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={4}
-                    className="w-full resize-none rounded-xl border border-border bg-background/60 px-4 py-3 outline-none transition-colors focus:border-primary"
-                  />
-                </Field>
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 glow-blue"
-                >
-                  {sent ? (
-                    <>
-                      <Check className="size-4" /> {t(contact.form.sent as never)}
-                    </>
-                  ) : (
-                    <>
-                      <Send className="size-4" /> {t(contact.form.send as never)}
-                    </>
-                  )}
+      <Reveal>
+        <div className="glass-strong relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] p-8 sm:p-12 lg:p-16">
+          <div aria-hidden="true" className="absolute -top-20 -right-16 size-64 rounded-full bg-pink/25 blur-3xl" />
+          <div aria-hidden="true" className="absolute -bottom-24 -left-16 size-72 rounded-full bg-primary/20 blur-3xl" />
+          <div className="relative grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+            <div>
+              <p className="section-kicker">{t(contact.kicker)}</p>
+              <h2 className="mt-3 max-w-3xl font-display text-3xl font-bold tracking-tight sm:text-5xl">{t(contact.title)}</h2>
+              <p className="mt-5 max-w-2xl leading-relaxed text-muted-foreground">{t(contact.subtitle)}</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href={`mailto:${profile.links.email}`} className="inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground glow-blue transition-transform hover:-translate-y-0.5"><Mail className="size-4" />{t(contact.email)}</a>
+                <button type="button" onClick={copyEmail} className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold shadow-sm transition-colors hover:bg-white/10" aria-live="polite">
+                  {copied ? <Check className="size-4 text-primary" /> : <Copy className="size-4" />}{copied ? t(contact.copied) : t(contact.copy)}
                 </button>
-              </form>
-            </Reveal>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-white/15 bg-white/5 p-5 backdrop-blur">
+              <div className="flex items-start gap-3"><span className="grid size-10 place-items-center rounded-xl bg-secondary text-primary"><MapPin className="size-4" /></span><div><p className="text-xs text-muted-foreground">{t({ en: "Based in", ko: "현재 위치" })}</p><p className="mt-0.5 text-sm font-semibold">{t(profile.location)}</p></div></div>
+              <div className="mt-5 flex gap-2">
+                <Social href={profile.links.github} label="GitHub"><GithubIcon className="size-5" /></Social>
+                <Social href={profile.links.linkedin} label="LinkedIn"><LinkedinIcon className="size-5" /></Social>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   )
 }
 
-function Field({
-  label,
-  htmlFor,
-  children,
-}: {
-  label: string
-  htmlFor: string
-  children: React.ReactNode
-}) {
-  return (
-    <label htmlFor={htmlFor} className="flex flex-col gap-1.5">
-      <span className="text-sm font-medium text-muted-foreground">{label}</span>
-      {children}
-    </label>
-  )
-}
-
-function SocialButton({
-  href,
-  label,
-  children,
-}: {
-  href: string
-  label: string
-  children: React.ReactNode
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className="grid size-10 place-items-center rounded-xl border border-border bg-card/40 text-muted-foreground transition-colors hover:text-foreground"
-    >
-      {children}
-    </a>
-  )
+function Social({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+  return <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="grid size-11 place-items-center rounded-2xl border border-white/15 bg-white/5 text-muted-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-white/10 hover:text-foreground">{children}</a>
 }
